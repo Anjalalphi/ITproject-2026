@@ -13,18 +13,7 @@ app.use(express.urlencoded({ extended: true })); // フォームから送信さ�
 app.use(express.static(path.join(process.cwd(), 'public'))); // CSSや画像などの静的ファイルを公開する
 app.set('view engine', 'ejs'); // テンプレートエンジンにEJSを設定
 app.set('views', path.join(process.cwd(), 'views')); // EJSファイルを保存するフォルダーを指定
-app.get('/api/db-check', async (_req, res) => {
-  try {
-    const result = await pool.query('SELECT 1 AS connection_test');
-    res.json({
-      status: 'ok',
-      database: result.rows[0].connection_test === 1 ? 'connected' : 'error',
-    });
-  } catch (error) {
-    console.error('DB接続確認に失敗しました', error);
-    res.status(503).json({ status: 'error', database: 'unavailable' });
-  }
-});
+
 
 
 // ------------------------------
@@ -36,6 +25,8 @@ app.get('/api/db-check', async (_req, res) => {
 app.get('/', (req: Request, res: Response): void => {
   res.send('20261110Test!');
 });
+
+
 
 
 // ------------------------------
